@@ -1,0 +1,41 @@
+
+Random Quote Generator Script
+This script pulls inspirational quotes from a website and displays them randomly on your terminal.
+
+Requirements:
+
+curl command installed
+Text editor (nano, vim, etc.)
+Instructions:
+
+Save the following script as quote.sh using your preferred editor:
+Bash
+#!/bin/bash
+
+# Website with inspirational quotes
+QUOTE_URL="https://www.goodreads.com/quotes/tag/inspirational"
+
+# Get HTML content
+html=$(curl -s "$QUOTE_URL")
+
+# Extract random quote and author
+quote=$(echo "$html" | grep -Eo '<div class="quoteText">.*?</div>' | shuf -n 1 | sed 's/<[^>]*>//g')
+author=$(echo "$html" | grep -Eo '<small.*?</small>' | shuf -n 1 | sed 's/<[^>]*>//g' | sed 's/^- //g')
+
+# Display quote with attribution
+echo -e "Quote:\n$quote\n"
+echo -e "Author: $author"
+Use code with caution.
+Make the script executable:
+Bash
+chmod +x quote.sh
+Use code with caution.
+Run the script:
+Bash
+./quote.sh
+Use code with caution.
+Customization:
+
+Change the QUOTE_URL variable to a different website containing quotes.
+Modify the HTML parsing commands to extract quotes and authors from different HTML structures.
+Add options to filter quotes by category, author, or keyword.
